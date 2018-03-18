@@ -1,10 +1,7 @@
 import {  Injectable  } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
-import { WorkItem, WorkItemState, StatusActivity } from '../workItemService/workItem.service';
 
-import { ServiceOffering } from '../provider/provider.service';
-//import { WorkItemState, StatusActivity } from '../networkDesigner.enum';
 
 
 
@@ -34,7 +31,7 @@ export enum MessageType{
 
 export class ApplicationMessage{
   messageType:MessageType;
-  workItem? : WorkItem;
+  workItem? : WorkItem; // External class
 }
 
 
@@ -42,14 +39,33 @@ export class ApplicationMessage{
 @Injectable() export class MessageService{
   private subject = new Subject<any>();
 
+
+  /** ******************************************************************************************
+   * @name: sendMessage
+   * 
+   * @author: Bruce Benton
+   * 
+   * @description: Basic send message method for observable based messaging service
+   * 
+   * @param {ApplicationMessage} message - Passes the current message content into message 
+   * @memberof MessageService
+   *  *****************************************************************************************/
   sendMessage(message: ApplicationMessage){
     this.subject.next({msg:message});
   }
 
-//  sendLoadMessage(command:String){
-//    this.subject.next({msg:command});
-//  }
 
+
+  /** ******************************************************************************************
+   * @name: getMessage
+   * 
+   * @author: Bruce Benton
+   * 
+   * @description: Declare a method to return a reference to the current subject as an observable
+   *                This is used to subscribe to the current observable
+   * 
+   * @memberof MessageService
+   *  *****************************************************************************************/
   getMessage():Observable<any>{
     return this.subject.asObservable();
   }
@@ -59,7 +75,7 @@ export class ApplicationMessage{
    * 
    * @author: Bruce Benton
    * 
-   * @description: Extract the next query parameter message from the passed in string
+   * @description: TBD - Code in progress - Extract the next query parameter message from the passed in string
    * 
    * @param {string} queryParam - Contains the aggregate query parameter string for the current work item
    * @param {number} startIndex - Specify the starting index in the string to extract a parameter
